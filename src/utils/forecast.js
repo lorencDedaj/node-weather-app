@@ -1,0 +1,57 @@
+const request = require('request');
+
+// new weatherstack api key from Edona's email
+// 74264d396b39dee4305c72e7c1e2f9cc
+
+// old api key,
+// 97bca0c00de242d317575a33b23568dd
+
+const forecast = (lat, long, callback) => {
+  const url =
+    'https://api.weatherstack.com/current?access_key=74264d396b39dee4305c72e7c1e2f9cc&query=' +
+    lat +
+    ',' +
+    long +
+    '&units=f';
+  request({ url, json: true }, (error, { body }) => {
+    // console.log('', ;
+    if (error) {
+      callback('Unable to connect to weatherstack API!', undefined);
+    } else if (body.error) {
+      callback(
+        'Cant find the temperature for the given location. Try another search!',
+        undefined,
+      );
+    } else {
+      callback(
+        undefined,
+        body.current.weather_descriptions[0] +
+          '. Todays temp in ' +
+          body.location.name +
+          ' is ' +
+          body.current.temperature +
+          ' and it feels like ' +
+          body.current.feelslike,
+      );
+    }
+  });
+};
+
+module.exports = forecast;
+
+// request({ url, json: true }, (error, { body }) => {
+//   if (error) {
+//     callback('Unable to connect to weatherstack API!', undefined);
+//   } else if (body.error) {
+//     callback('Cant find the temperature for the given location.', undefined);
+//   } else {
+//     // Destructure everything we need from body
+//     const { current, location } = body;
+//     const { temperature, feelslike, weather_descriptions } = current;
+
+//     callback(
+//       undefined,
+//       `${weather_descriptions[0]}. Todays temp in ${location.name} is ${temperature} and it feels like ${feelslike}`
+//     );
+//   }
+// });

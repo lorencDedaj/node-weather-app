@@ -6,7 +6,7 @@ const request = require('request');
 const forecast = require('./utils/forecast');
 const geocode = require('./utils/geocode');
 
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 // Define paths for Express config
@@ -110,6 +110,6 @@ app.get('/*wildcard', (req, res) => {
 //   });
 // });
 
-app.listen(PORT, () => {
-  console.log(`Listening on localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}`);
 });

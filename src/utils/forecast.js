@@ -1,14 +1,15 @@
 const request = require('request');
+require('dotenv').config();
 
 // new weatherstack api key from Edona's email
 // 74264d396b39dee4305c72e7c1e2f9cc
 
 // old api key,
 // 97bca0c00de242d317575a33b23568dd
-
+// const apiKey = process.env.WEATHER_API_KEY;
 const forecast = (lat, long, callback) => {
   const url =
-    'https://api.weatherstack.com/current?access_key=74264d396b39dee4305c72e7c1e2f9cc&query=' +
+    `https://api.weatherstack.com/current?access_key=${process.env.WEATHER_API_KEY}&query=` +
     lat +
     ',' +
     long +

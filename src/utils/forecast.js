@@ -15,7 +15,7 @@ const forecast = (lat, long, callback) => {
     long +
     '&units=f';
   request({ url, json: true }, (error, { body }) => {
-    // console.log('', ;
+    // console.log('body: ', body);
     if (error) {
       callback('Unable to connect to weatherstack API!', undefined);
     } else if (body.error) {
@@ -26,13 +26,23 @@ const forecast = (lat, long, callback) => {
     } else {
       callback(
         undefined,
-        body.current.weather_descriptions[0] +
+        'Overcast: ' +
+          body.current.weather_descriptions[0] +
           '. Todays temp in ' +
           body.location.name +
           ' is ' +
           body.current.temperature +
           ' and it feels like ' +
-          body.current.feelslike,
+          body.current.feelslike +
+          ',' +
+          ' Humidity is at ' +
+          body.current.humidity +
+          '.' +
+          ' Sunrise time: ' +
+          body.current.astro.sunrise +
+          ',' +
+          ' Sunset time: ' +
+          body.current.astro.sunset,
       );
     }
   });
